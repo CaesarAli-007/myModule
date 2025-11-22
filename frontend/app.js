@@ -78,14 +78,18 @@ const questionBanks = {
 function show(elm) { elm.classList.remove('hidden') }
 function hide(elm) { elm.classList.add('hidden') }
 
-function setAuthState(authed) {
-    if (authed) {
+function setAuthState(authed)
+{
+    if (authed) 
+    {
         hide(showRegisterBtn)
         hide(showLoginBtn)
         show(logoutBtn)
         hide(authForms)
         show(domainSelection)
-    } else {
+    } 
+    else
+    {
         show(showRegisterBtn)
         show(showLoginBtn)
         hide(logoutBtn)
@@ -102,9 +106,12 @@ function setAuthState(authed) {
 
 // Scroll effect for navbar
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+    if (window.scrollY > 50)
+    {
         navbar.classList.add('scrolled')
-    } else {
+    }
+    else
+    {
         navbar.classList.remove('scrolled')
     }
 })
@@ -135,7 +142,8 @@ logoutBtn.onclick = () => {
 
 // Switch between forms
 const switchToLogin = el('switch-to-login')
-if (switchToLogin) {
+if (switchToLogin)
+{
     switchToLogin.onclick = (e) => {
         e.preventDefault()
         show(loginForm)
@@ -144,7 +152,8 @@ if (switchToLogin) {
 }
 
 const switchToRegister = el('switch-to-register')
-if (switchToRegister) {
+if (switchToRegister)
+{
     switchToRegister.onclick = (e) => {
         e.preventDefault()
         show(registerForm)
@@ -153,7 +162,8 @@ if (switchToRegister) {
 }
 
 const backToLogin = el('back-to-login')
-if (backToLogin) {
+if (backToLogin)
+{
     backToLogin.onclick = (e) => {
         e.preventDefault()
         show(loginForm)
@@ -171,7 +181,8 @@ registerForm.addEventListener('submit', async (e) => {
         password: form.get('password')
     }
     
-    try {
+    try
+    {
         const res = await fetch(API + '/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -179,15 +190,20 @@ registerForm.addEventListener('submit', async (e) => {
         })
         const j = await res.json()
         
-        if (res.ok) {
+        if (res.ok)
+        {
             alert('✓ Registration successful! Please sign in.')
             show(loginForm)
             hide(registerForm)
             registerForm.reset()
-        } else {
+        }
+        else
+        {
             alert(j.message || 'Registration failed')
         }
-    } catch (err) {
+    }
+    catch (err)
+    {
         console.error(err)
         alert('Network error during registration')
     }
@@ -202,7 +218,8 @@ loginForm.addEventListener('submit', async (e) => {
         password: form.get('password')
     }
     
-    try {
+    try
+    {
         const res = await fetch(API + '/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -210,15 +227,20 @@ loginForm.addEventListener('submit', async (e) => {
         })
         const j = await res.json()
         
-        if (res.ok && j.token) {
+        if (res.ok && j.token)
+        {
             token = j.token
             localStorage.setItem('token', token)
             setAuthState(true)
             loginForm.reset()
-        } else {
+        }
+        else
+        {
             alert(j.message || 'Login failed')
         }
-    } catch (err) {
+    }
+    catch (err)
+    {
         console.error(err)
         alert('Network error during login')
     }
@@ -226,7 +248,8 @@ loginForm.addEventListener('submit', async (e) => {
 
 // Forgot password
 const forgotLink = el('forgot-link')
-if (forgotLink) {
+if (forgotLink)
+{
     forgotLink.addEventListener('click', (e) => {
         e.preventDefault()
         hide(loginForm)
@@ -240,7 +263,8 @@ resetRequestForm.addEventListener('submit', async (e) => {
     const form = new FormData(resetRequestForm)
     const payload = { email: form.get('email') }
     
-    try {
+    try
+    {
         const res = await fetch(API + '/api/auth/request-reset', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -251,7 +275,9 @@ resetRequestForm.addEventListener('submit', async (e) => {
         hide(resetRequestForm)
         show(loginForm)
         resetRequestForm.reset()
-    } catch (err) {
+    }
+    catch (err)
+    {
         console.error(err)
         alert('Network error requesting reset')
     }
@@ -266,7 +292,8 @@ resetConfirmForm.addEventListener('submit', async (e) => {
         password: form.get('password')
     }
     
-    try {
+    try
+    {
         const res = await fetch(API + '/api/auth/reset', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -277,7 +304,9 @@ resetConfirmForm.addEventListener('submit', async (e) => {
         hide(resetConfirmForm)
         show(loginForm)
         resetConfirmForm.reset()
-    } catch (err) {
+    }
+    catch (err)
+    {
         console.error(err)
         alert('Network error performing reset')
     }
@@ -321,11 +350,13 @@ function renderQuestions(domain) {
 qaForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     
-    if (!token) {
+    if (!token)
+    {
         alert('Not authenticated')
         return
     }
-    if (!currentDomain) {
+    if (!currentDomain)
+    {
         alert('No domain selected')
         return
     }
@@ -333,7 +364,8 @@ qaForm.addEventListener('submit', async (e) => {
     const answers = []
     const bank = questionBanks[currentDomain]
     
-    for (let i = 0; i < bank.length; i++) {
+    for (let i = 0; i < bank.length; i++)
+    {
         const field = qaForm['q' + i]
         answers.push({
             q: bank[i],
@@ -348,7 +380,8 @@ qaForm.addEventListener('submit', async (e) => {
         answers
     }
 
-    try {
+    try
+    {
         const res = await fetch(API + '/api/survey/submit', {
             method: 'POST',
             headers: {
@@ -359,16 +392,21 @@ qaForm.addEventListener('submit', async (e) => {
         })
         const j = await res.json()
         
-        if (res.ok) {
+        if (res.ok)
+        {
             hide(questionnaire)
             show(success)
             summary.textContent = `Domain: ${currentDomain} | Submission ID: ${j.id || 'pending'}`
             qaForm.reset()
             window.scrollTo({ top: 0, behavior: 'smooth' })
-        } else {
+        }
+        else
+        {
             alert(j.message || 'Failed to save responses')
         }
-    } catch (err) {
+    }
+    catch (err)
+    {
         console.error(err)
         alert('Network error saving responses')
     }
@@ -376,7 +414,8 @@ qaForm.addEventListener('submit', async (e) => {
 
 // Return home button
 const returnHomeBtn = el('return-home')
-if (returnHomeBtn) {
+if (returnHomeBtn)
+{
     returnHomeBtn.addEventListener('click', () => {
         hide(success)
         show(domainSelection)
@@ -387,16 +426,21 @@ if (returnHomeBtn) {
 
 // Check URL for reset token
 (function checkUrlForToken() {
-    try {
+    try
+    {
         const params = new URLSearchParams(location.search)
-        if (params.get('reset')) {
+        if (params.get('reset'))
+        {
             hide(authForms)
             show(resetConfirmForm)
-            if (resetConfirmForm.token) {
+            if (resetConfirmForm.token)
+            {
                 resetConfirmForm.token.value = params.get('reset')
             }
         }
-    } catch (e) {
+    }
+    catch (e)
+    {
         console.warn('Could not parse URL params', e)
     }
 })()
