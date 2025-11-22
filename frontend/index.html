@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hire Brain</title>
+  <link 
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <h1>Hire Brain</h1>
+      <div id="auth-area">
+        <button id="show-register" type="button" class="btn btn-outline-success">Register</button>
+        <button id="show-login" type="button" class="btn btn-outline-info">Login</button>
+        <button id="logout" style="display:none;">Logout</button>
+      </div>
+    </header>
+
+    <main>
+
+      <section id="auth-forms">
+
+        <!-- REGISTER -->
+        <form id="register-form" class="card hidden">
+          <h2>Create Profile</h2>
+          <input name="name" placeholder="Full name" required />
+          <input name="email" type="email" placeholder="Email" required />
+          <input name="password" type="password" placeholder="Password" required />
+          <button type="submit" type="button" class="btn btn-outline-success">Register</button>
+        </form>
+
+        <!-- LOGIN -->
+        <form id="login-form" class="card hidden">
+          <h2>Login</h2>
+          <input name="email" type="email" placeholder="Email" required />
+          <input name="password" type="password" placeholder="Password" required />
+          <button type="submit" class="btn btn-outline-info">Login</button>
+          <p class="muted">Forgot password? <a id="forgot-link" href="#">Reset</a></p>
+        </form>
+
+        <!-- RESET REQUEST -->
+        <form id="reset-request-form" class="card hidden">
+          <h2>Request Password Reset</h2>
+          <input name="email" type="email" placeholder="Email" required />
+          <button type="submit">Request Reset</button>
+        </form>
+
+        <!-- RESET CONFIRM -->
+        <form id="reset-confirm-form" class="card hidden">
+          <h2>Set New Password</h2>
+          <input name="token" placeholder="Reset token" required />
+          <input name="password" type="password" placeholder="New password" required />
+          <button type="submit">Set Password</button>
+        </form>
+      </section>
+
+      <!-- DOMAIN SELECTION -->
+      <section id="domain-selection" class="card hidden">
+        <h2>Select Your Domain</h2>
+        <div class="domains">
+          <button class="domain-btn" data-domain="DevOps">DevOps</button>
+          <button class="domain-btn" data-domain="Full-stack">Full Stack</button>
+          <button class="domain-btn" data-domain="Blockchain">Blockchain</button>
+          <button class="domain-btn" data-domain="AI/ML">AI/ML</button>
+        </div>
+      </section>
+
+      <!-- QUESTIONNAIRE -->
+      <section id="questionnaire" class="card hidden">
+        <h2 id="q-title"></h2>
+        <form id="qa-form">
+          <div id="questions"></div>
+          <button type="submit">Submit Answers</button>
+        </form>
+      </section>
+
+      <!-- SUCCESS -->
+      <section id="success" class="card hidden">
+        <h2>Submission Complete</h2>
+        <p>Your responses have been saved.</p>
+        <button id="return-home">Return Home</button>
+      </section>
+
+    </main>
+
+    <footer>
+      <p class="muted">© 2025 Hire Brain LLC. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

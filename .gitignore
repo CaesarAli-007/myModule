@@ -1,0 +1,62 @@
+# ─────────────────────────────
+# Node.js / Backend
+# ─────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Logs
+logs/
+*.log
+logs/*.log
+
+# Environment Variables
+.env
+.env.local
+.env.production
+.env.development
+
+# Build Output
+dist/
+build/
+
+# ─────────────────────────────
+# Frontend (Static)
+# ─────────────────────────────
+# Ignore generated frontend bundles if you build later
+/public/build/
+public/dist/
+
+# ─────────────────────────────
+# OS / Editor
+# ─────────────────────────────
+# VSCode
+.vscode/
+*.code-workspace
+
+# Windows files
+Thumbs.db
+Desktop.ini
+
+# macOS files (in case repo ever used on mac)
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ─────────────────────────────
+# Temporary Files
+# ─────────────────────────────
+*.tmp
+*.cache
+.cache/
+.temp/
+
+# ─────────────────────────────
+# Mongo / Database
+# ─────────────────────────────
+# If you ever create local db dump
+dump/
+*.bson
+*.mongodb
