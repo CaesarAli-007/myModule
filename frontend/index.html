@@ -4,20 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hire Brain</title>
-  <link 
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <div class="container">
 
-    <header>
-      <h1>Hire Brain</h1>
+    <header id="navbar">
+      <h1>HIRE BRAIN</h1>
       <div id="auth-area">
-        <button id="show-register" type="button" class="btn btn-outline-success">Register</button>
-        <button id="show-login" type="button" class="btn btn-outline-info">Login</button>
-        <button id="logout" style="display:none;">Logout</button>
+        <button id="show-register" type="button">Sign Up</button>
+        <button id="show-login" type="button">Sign In</button>
+        <button id="logout" class="hidden">Sign Out</button>
       </div>
     </header>
 
@@ -27,46 +25,65 @@
 
         <!-- REGISTER -->
         <form id="register-form" class="card hidden">
-          <h2>Create Profile</h2>
-          <input name="name" placeholder="Full name" required />
-          <input name="email" type="email" placeholder="Email" required />
+          <h2>Sign Up</h2>
+          <input name="name" placeholder="Full Name" required />
+          <input name="email" type="email" placeholder="Email Address" required />
           <input name="password" type="password" placeholder="Password" required />
-          <button type="submit" type="button" class="btn btn-outline-success">Register</button>
+          <button type="submit">Create Account</button>
+          <p class="muted">Already have an account? <a href="#" id="switch-to-login">Sign in now</a></p>
         </form>
 
         <!-- LOGIN -->
         <form id="login-form" class="card hidden">
-          <h2>Login</h2>
-          <input name="email" type="email" placeholder="Email" required />
+          <h2>Sign In</h2>
+          <input name="email" type="email" placeholder="Email Address" required />
           <input name="password" type="password" placeholder="Password" required />
-          <button type="submit" class="btn btn-outline-info">Login</button>
-          <p class="muted">Forgot password? <a id="forgot-link" href="#">Reset</a></p>
+          <button type="submit">Sign In</button>
+          <p class="muted">Forgot password? <a id="forgot-link" href="#">Reset it here</a></p>
+          <p class="muted">New to Hire Brain? <a href="#" id="switch-to-register">Sign up now</a></p>
         </form>
 
         <!-- RESET REQUEST -->
         <form id="reset-request-form" class="card hidden">
-          <h2>Request Password Reset</h2>
-          <input name="email" type="email" placeholder="Email" required />
-          <button type="submit">Request Reset</button>
+          <h2>Reset Password</h2>
+          <p class="muted" style="margin-bottom: 20px;">Enter your email and we'll send you a reset link.</p>
+          <input name="email" type="email" placeholder="Email Address" required />
+          <button type="submit">Send Reset Link</button>
+          <p class="muted"><a href="#" id="back-to-login">Back to Sign In</a></p>
         </form>
 
         <!-- RESET CONFIRM -->
         <form id="reset-confirm-form" class="card hidden">
           <h2>Set New Password</h2>
-          <input name="token" placeholder="Reset token" required />
-          <input name="password" type="password" placeholder="New password" required />
-          <button type="submit">Set Password</button>
+          <input name="token" placeholder="Reset Token" required />
+          <input name="password" type="password" placeholder="New Password" required />
+          <button type="submit">Update Password</button>
         </form>
       </section>
 
       <!-- DOMAIN SELECTION -->
       <section id="domain-selection" class="card hidden">
-        <h2>Select Your Domain</h2>
+        <h2>Choose Your Domain</h2>
+        <p class="muted" style="text-align: center; margin-bottom: 30px; font-size: 16px;">
+          Select the area you want to be screened for
+        </p>
         <div class="domains">
-          <button class="domain-btn" data-domain="DevOps">DevOps</button>
-          <button class="domain-btn" data-domain="Full-stack">Full Stack</button>
-          <button class="domain-btn" data-domain="Blockchain">Blockchain</button>
-          <button class="domain-btn" data-domain="AI/ML">AI/ML</button>
+          <button class="domain-btn" data-domain="DevOps">
+            <div class="domain-icon">⚙️</div>
+            DevOps
+          </button>
+          <button class="domain-btn" data-domain="Full-stack">
+            <div class="domain-icon">💻</div>
+            Full Stack
+          </button>
+          <button class="domain-btn" data-domain="Blockchain">
+            <div class="domain-icon">⛓️</div>
+            Blockchain
+          </button>
+          <button class="domain-btn" data-domain="AI/ML">
+            <div class="domain-icon">🤖</div>
+            AI/ML
+          </button>
         </div>
       </section>
 
@@ -74,22 +91,38 @@
       <section id="questionnaire" class="card hidden">
         <h2 id="q-title"></h2>
         <form id="qa-form">
+          <div class="row">
+            <label for="experience">Years of Experience</label>
+            <input id="experience" name="experience" type="number" min="0" max="50" step="0.5" placeholder="e.g., 3.5" required />
+          </div>
+          
+          <div class="row">
+            <label for="candidate-questions">Any Questions for Us?</label>
+            <textarea id="candidate-questions" name="candidateQuestions" rows="3" placeholder="Feel free to ask us anything..."></textarea>
+          </div>
+
           <div id="questions"></div>
-          <button type="submit">Submit Answers</button>
+          
+          <button type="submit">Submit Screening</button>
         </form>
       </section>
 
       <!-- SUCCESS -->
       <section id="success" class="card hidden">
-        <h2>Submission Complete</h2>
-        <p>Your responses have been saved.</p>
-        <button id="return-home">Return Home</button>
+        <h2>✓ Submission Complete!</h2>
+        <p>Thank you for completing the screening questionnaire.</p>
+        <p>Our team will review your responses and get back to you soon.</p>
+        <div id="summary"></div>
+        <button id="return-home" class="btn-primary">Back to Dashboard</button>
       </section>
 
     </main>
 
     <footer>
-      <p class="muted">© 2025 Hire Brain LLC. All rights reserved.</p>
+      <p class="muted">© 2025 Hire Brain. All Rights Reserved.</p>
+      <p class="muted" style="margin-top: 8px; font-size: 12px;">
+        Questions? Contact us at <a href="mailto:support@hirebrain.com" style="color: var(--netflix-red);">support@hirebrain.com</a>
+      </p>
     </footer>
   </div>
 
