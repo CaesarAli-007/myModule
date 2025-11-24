@@ -71,6 +71,30 @@ const questionBanks = {
         'How do you monitor model drift and retraining?',
         'Explain a time you improved model accuracy.',
         'Describe any MLOps tools you have used.'
+    ],
+    'CyberSecurity': [
+        'What security frameworks have you worked with (NIST, ISO 27001, CIS)?',
+        'Describe your experience with penetration testing and vulnerability assessments.',
+        'Which SIEM tools have you used (Splunk, ELK, QRadar)?',
+        'How do you approach threat modeling and risk assessment?',
+        'Have you performed incident response? Describe a critical incident.',
+        'What security tools do you use regularly (Nmap, Wireshark, Metasploit)?',
+        'Explain your experience with network security and firewall configurations.',
+        'How do you stay updated with the latest security threats and CVEs?',
+        'Describe your experience with identity and access management (IAM).',
+        'Have you worked with security compliance and audits? Which standards?'
+    ],
+    'Data Engineer': [
+        'Which data pipeline tools have you used (Apache Airflow, Kafka, Spark)?',
+        'Describe your experience with data warehousing solutions (Snowflake, Redshift, BigQuery).',
+        'How do you approach data modeling and schema design?',
+        'What ETL/ELT processes have you implemented?',
+        'Which programming languages do you use for data engineering (Python, Scala, SQL)?',
+        'Have you worked with real-time data streaming? Describe your setup.',
+        'How do you ensure data quality and implement data validation?',
+        'Describe your experience with big data technologies (Hadoop, Hive, Presto).',
+        'How do you optimize query performance and database operations?',
+        'What data orchestration and workflow management tools have you used?'
     ]
 }
 
@@ -78,18 +102,14 @@ const questionBanks = {
 function show(elm) { elm.classList.remove('hidden') }
 function hide(elm) { elm.classList.add('hidden') }
 
-function setAuthState(authed)
-{
-    if (authed) 
-    {
+function setAuthState(authed) {
+    if (authed) {
         hide(showRegisterBtn)
         hide(showLoginBtn)
         show(logoutBtn)
         hide(authForms)
         show(domainSelection)
-    } 
-    else
-    {
+    } else {
         show(showRegisterBtn)
         show(showLoginBtn)
         hide(logoutBtn)
@@ -106,12 +126,9 @@ function setAuthState(authed)
 
 // Scroll effect for navbar
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50)
-    {
+    if (window.scrollY > 50) {
         navbar.classList.add('scrolled')
-    }
-    else
-    {
+    } else {
         navbar.classList.remove('scrolled')
     }
 })
@@ -142,8 +159,7 @@ logoutBtn.onclick = () => {
 
 // Switch between forms
 const switchToLogin = el('switch-to-login')
-if (switchToLogin)
-{
+if (switchToLogin) {
     switchToLogin.onclick = (e) => {
         e.preventDefault()
         show(loginForm)
@@ -152,8 +168,7 @@ if (switchToLogin)
 }
 
 const switchToRegister = el('switch-to-register')
-if (switchToRegister)
-{
+if (switchToRegister) {
     switchToRegister.onclick = (e) => {
         e.preventDefault()
         show(registerForm)
@@ -162,8 +177,7 @@ if (switchToRegister)
 }
 
 const backToLogin = el('back-to-login')
-if (backToLogin)
-{
+if (backToLogin) {
     backToLogin.onclick = (e) => {
         e.preventDefault()
         show(loginForm)
@@ -181,8 +195,7 @@ registerForm.addEventListener('submit', async (e) => {
         password: form.get('password')
     }
     
-    try
-    {
+    try {
         const res = await fetch(API + '/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -190,20 +203,15 @@ registerForm.addEventListener('submit', async (e) => {
         })
         const j = await res.json()
         
-        if (res.ok)
-        {
+        if (res.ok) {
             alert('✓ Registration successful! Please sign in.')
             show(loginForm)
             hide(registerForm)
             registerForm.reset()
-        }
-        else
-        {
+        } else {
             alert(j.message || 'Registration failed')
         }
-    }
-    catch (err)
-    {
+    } catch (err) {
         console.error(err)
         alert('Network error during registration')
     }
@@ -218,8 +226,7 @@ loginForm.addEventListener('submit', async (e) => {
         password: form.get('password')
     }
     
-    try
-    {
+    try {
         const res = await fetch(API + '/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -227,20 +234,15 @@ loginForm.addEventListener('submit', async (e) => {
         })
         const j = await res.json()
         
-        if (res.ok && j.token)
-        {
+        if (res.ok && j.token) {
             token = j.token
             localStorage.setItem('token', token)
             setAuthState(true)
             loginForm.reset()
-        }
-        else
-        {
+        } else {
             alert(j.message || 'Login failed')
         }
-    }
-    catch (err)
-    {
+    } catch (err) {
         console.error(err)
         alert('Network error during login')
     }
@@ -248,8 +250,7 @@ loginForm.addEventListener('submit', async (e) => {
 
 // Forgot password
 const forgotLink = el('forgot-link')
-if (forgotLink)
-{
+if (forgotLink) {
     forgotLink.addEventListener('click', (e) => {
         e.preventDefault()
         hide(loginForm)
@@ -263,8 +264,7 @@ resetRequestForm.addEventListener('submit', async (e) => {
     const form = new FormData(resetRequestForm)
     const payload = { email: form.get('email') }
     
-    try
-    {
+    try {
         const res = await fetch(API + '/api/auth/request-reset', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -275,9 +275,7 @@ resetRequestForm.addEventListener('submit', async (e) => {
         hide(resetRequestForm)
         show(loginForm)
         resetRequestForm.reset()
-    }
-    catch (err)
-    {
+    } catch (err) {
         console.error(err)
         alert('Network error requesting reset')
     }
@@ -292,8 +290,7 @@ resetConfirmForm.addEventListener('submit', async (e) => {
         password: form.get('password')
     }
     
-    try
-    {
+    try {
         const res = await fetch(API + '/api/auth/reset', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -304,9 +301,7 @@ resetConfirmForm.addEventListener('submit', async (e) => {
         hide(resetConfirmForm)
         show(loginForm)
         resetConfirmForm.reset()
-    }
-    catch (err)
-    {
+    } catch (err) {
         console.error(err)
         alert('Network error performing reset')
     }
@@ -350,13 +345,11 @@ function renderQuestions(domain) {
 qaForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     
-    if (!token)
-    {
+    if (!token) {
         alert('Not authenticated')
         return
     }
-    if (!currentDomain)
-    {
+    if (!currentDomain) {
         alert('No domain selected')
         return
     }
@@ -364,8 +357,7 @@ qaForm.addEventListener('submit', async (e) => {
     const answers = []
     const bank = questionBanks[currentDomain]
     
-    for (let i = 0; i < bank.length; i++)
-    {
+    for (let i = 0; i < bank.length; i++) {
         const field = qaForm['q' + i]
         answers.push({
             q: bank[i],
@@ -380,8 +372,7 @@ qaForm.addEventListener('submit', async (e) => {
         answers
     }
 
-    try
-    {
+    try {
         const res = await fetch(API + '/api/survey/submit', {
             method: 'POST',
             headers: {
@@ -392,21 +383,16 @@ qaForm.addEventListener('submit', async (e) => {
         })
         const j = await res.json()
         
-        if (res.ok)
-        {
+        if (res.ok) {
             hide(questionnaire)
             show(success)
             summary.textContent = `Domain: ${currentDomain} | Submission ID: ${j.id || 'pending'}`
             qaForm.reset()
             window.scrollTo({ top: 0, behavior: 'smooth' })
-        }
-        else
-        {
+        } else {
             alert(j.message || 'Failed to save responses')
         }
-    }
-    catch (err)
-    {
+    } catch (err) {
         console.error(err)
         alert('Network error saving responses')
     }
@@ -414,8 +400,7 @@ qaForm.addEventListener('submit', async (e) => {
 
 // Return home button
 const returnHomeBtn = el('return-home')
-if (returnHomeBtn)
-{
+if (returnHomeBtn) {
     returnHomeBtn.addEventListener('click', () => {
         hide(success)
         show(domainSelection)
@@ -426,21 +411,16 @@ if (returnHomeBtn)
 
 // Check URL for reset token
 (function checkUrlForToken() {
-    try
-    {
+    try {
         const params = new URLSearchParams(location.search)
-        if (params.get('reset'))
-        {
+        if (params.get('reset')) {
             hide(authForms)
             show(resetConfirmForm)
-            if (resetConfirmForm.token)
-            {
+            if (resetConfirmForm.token) {
                 resetConfirmForm.token.value = params.get('reset')
             }
         }
-    }
-    catch (e)
-    {
+    } catch (e) {
         console.warn('Could not parse URL params', e)
     }
 })()
